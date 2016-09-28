@@ -34,9 +34,8 @@ end
 
 def parse_character_movies(films_hash)
   # binding.pry
-  array = []
   films_hash.each_with_index do |x, index|
-     array << x.fetch("title")
+     puts "#{index}. #{x.fetch("title")}"
   end 
   # some iteration magic and puts out the movies in a nice list
 end
