@@ -32,6 +32,25 @@ end
 
 # puts get_character_movies_from_api("r2-d2")
 
+def get_movie_info(film)
+ all_films = RestClient.get('http://www.swapi.co/api/films/')
+ film_hash = JSON.parse(all_films)
+ indiv_film = film_hash.fetch("results").find {|movie| movie.fetch("title") == film}
+
+
+end
+
+# p get_movie_info("A New Hope")
+
+def parse_movie(movie)
+  movie.each do |x|
+    puts x 
+  end 
+  return nil
+end 
+
+puts parse_movie(get_movie_info("A New Hope"))
+
 def parse_character_movies(films_hash)
   # binding.pry
   films_hash.each_with_index do |x, index|
