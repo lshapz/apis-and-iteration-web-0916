@@ -13,19 +13,15 @@ def get_character_info(character)
 end
 
 def get_character_specific(character, trait)
-  get_character_info(character).fetch(trait)
+  return get_character_info(character).fetch(trait)
+binding.pry
 end
-
-puts get_character_specific("R2-D2", "hair_color")
-
 
 
 def get_movie_info(film)
  all_films = RestClient.get('http://www.swapi.co/api/films/')
  film_hash = JSON.parse(all_films)
  indiv_film = film_hash.fetch("results").find {|movie| movie.fetch("title") == film}
-
-
 end
 
 
@@ -41,17 +37,23 @@ end
 
 def parse_character_movies(films_hash)
   # binding.pry
-  films_hash.each_with_index do |x, index|
-     puts "#{index+1} #{x.fetch("title")}"
+  films_hash.each do |x|
+     puts "#{x.fetch("episode_id")} #{x.fetch("title")}"
   end 
   # some iteration magic and puts out the movies in a nice list
 end
 
+def get_full_movies(api_array)
+  api_array.collect do |film_url|
+    JSON.parse(RestClient.get(film_url))
+  end
+end
 
 
 
 def show_character_movies(character)
-  films_hash = get_character_movies_from_api(character)
+  films_array = get_character_specific(character, "films")
+  films_hash = get_full_movies(films_array)
   parse_character_movies(films_hash)
 end
 
