@@ -37,8 +37,13 @@ end
 
 def parse_character_movies(films_hash)
   # binding.pry
+  array = []
   films_hash.each do |x|
-     puts "#{x.fetch("episode_id")} #{x.fetch("title")}"
+       array << "#{x.fetch("episode_id")} #{x.fetch("title")}"
+     # puts "#{x.fetch("episode_id")} #{x.fetch("title")}" 
+  end 
+  array.sort.each do |y|
+    puts y
   end 
   # some iteration magic and puts out the movies in a nice list
 end
