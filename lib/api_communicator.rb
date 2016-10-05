@@ -7,7 +7,7 @@ def all_character_hash
   all_characters = RestClient.get('http://www.swapi.co/api/people/')
   JSON.parse(all_characters)
 end
-#gets a hash of all the characters and all their stuff 
+#gets a hash of all the characters and all their stuff
 
 def get_character_info(character)
     indiv_char = all_character_hash.fetch("results").find {|char_hash| char_hash.fetch("name").downcase == character.downcase}
@@ -22,27 +22,31 @@ end
 #takes the hash that returns on the previous method and searches that for different keys/traits and returns their value
 # puts  get_character_specific("r2-d2", "hair_color")
 
-def all_movie_hash 
+def all_movie_hash
 
  all_films = RestClient.get('http://www.swapi.co/api/films/')
  film_hash = JSON.parse(all_films)
-end 
-#gets a hash of all the movies and all their stuff 
+end
+#gets a hash of all the movies and all their stuff
 # puts all_movie_hash
 
 def get_movie_info(film)
- indiv_film = all_movie_hash.fetch("results").find {|movie| movie.fetch("title") == film}
+ indiv_film = all_movie_hash.fetch("results").find {|movie| movie.fetch("title").downcase == film.downcase}
 end
 #takes that hash, goes into the key array-results, finds the elemnt where the title is right, and returns its hash (but not neatly)
 # puts get_movie_info("Attack of the Clones")
 
+def print_movie_crawl(film)
+  puts get_movie_info(film)["opening_crawl"]
+end
+
 
 def parse_movie(movie)
   movie.each do |x|
-    puts x 
-  end 
+    puts x
+  end
   return nil
-end 
+end
 #takes the information from before and puts each thing on a new line
 # puts parse_movie(get_movie_info("A New Hope"))
 
@@ -51,13 +55,13 @@ def parse_character_movies(films_hash)
   array = []
   films_hash.each do |x|
        array << "#{x.fetch("episode_id")}. #{x.fetch("title")}"
-     # puts "#{x.fetch("episode_id")} #{x.fetch("title")}" 
-  end 
+     # puts "#{x.fetch("episode_id")} #{x.fetch("title")}"
+  end
   # array.sort.each do |y|
   #   puts y
-  # end 
+  # end
   # some iteration magic and puts out the movies in a nice list
-  array.sort 
+  array.sort
 end
 
 #finds the movies that a character is in, fetches its episode_id and it's title, then sorts them by episode #
@@ -65,11 +69,11 @@ end
 def get_full_movies(api_array)
   api_array.collect do |film_url|
     JSON.parse(RestClient.get(film_url))
-    # binding.pry 
+    # binding.pry
   end
 end
 
-#takes an array of film urls and returns the film hashes, kinda like get movie info but starting with the URL 
+#takes an array of film urls and returns the film hashes, kinda like get movie info but starting with the URL
 
 
 
@@ -77,7 +81,7 @@ end
 def show_character_movies(character)
   films_array = get_character_specific(character, "films")
   films_hash = get_full_movies(films_array)
-  # binding.pry
+
   parse_character_movies(films_hash)
 end
 
