@@ -11,7 +11,7 @@ def get_character_from_user
 end
 
 def get_movie_from_user
-  puts "now enter a movie title"
+  puts "Please enter a movie title"
   movie = gets.chomp.downcase
   return movie
 end

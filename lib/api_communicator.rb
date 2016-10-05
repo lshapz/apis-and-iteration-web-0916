@@ -37,9 +37,29 @@ end
 # puts get_movie_info("Attack of the Clones")
 
 def print_movie_crawl(film)
-  puts get_movie_info(film)["opening_crawl"]
+  20.times {puts " "}
+  crawl = get_movie_info(film)["opening_crawl"]
+  crawl_array = crawl.split("\n")
+  crawl_array.each do |line|
+    puts "                                                       #{line}"
+    sleep(1)
+  end
+  50.times do
+    sleep(1)
+    puts " "
+  end
 end
+#takes a movie title and makes the movie's crawl slowly crawl up the screen
 
+def print_movies
+puts "The Phantom Menace"
+puts "Attack of the Clones"
+puts "Revenge of the Sith"
+puts "A New Hope"
+puts "The Empire Strikes Back"
+puts "Return of the Jedi"
+puts "The Force Awakens"
+end
 
 def parse_movie(movie)
   movie.each do |x|
